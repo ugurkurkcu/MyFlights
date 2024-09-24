@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { IoIosAirplane } from "react-icons/io";
+import React from "react";
 import HeaderRight from "../components/HeaderRight";
 import SearchBox from "../components/SearchBox";
 import Options from "../components/Options";
 import Ads from "../components/Ads";
 import FlightCard from "../components/FlightCard";
 import { useSelector } from "react-redux";
-
+import Logo from "../components/Logo";
 
 const MainPage = () => {
   const { flights, airlines, aircraftTypes, destinations } = useSelector(
@@ -16,13 +15,7 @@ const MainPage = () => {
   return (
     <div className=" bg-[#F6F4F8] p-4 h-full w-full flex flex-col shadow-xl rounded-lg max-lg:overflow-y-scroll ">
       <header className="flex flex-row justify-between mb-3">
-        <div className=" flex flex-row items-center gap-2 cursor-pointer">
-          <IoIosAirplane
-            color="#ffffff"
-            className=" bg-[#4B0097] h-6 w-6 rounded-full"
-          />
-          <h2 className=" font-bold max-sm:hidden">PLANE SCAPE</h2>
-        </div>
+        <Logo />
 
         <HeaderRight />
       </header>
