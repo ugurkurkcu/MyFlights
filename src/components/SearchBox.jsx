@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosAirplane, IoMdCalendar } from "react-icons/io";
 import { MdFlightLand, MdFlightTakeoff } from "react-icons/md";
 import Select from "./Select";
+import { useDispatch } from "react-redux";
+import { addFilter, resetFilter } from "../store/flightSlice";
 
 const SearchBox = ({ destTo, destFrom }) => {
   const [departure, setDeparture] = useState();
   const [arrival, setArrival] = useState();
   const [from, setFrom] = useState();
   const [to, setTo] = useState();
+  const dispatch = useDispatch();
 
-  console.log(departure);
+  useEffect(() => {
+    dispatch(addFilter([departure, to]));
+  }, [departure, to]);
+
   return (
     <div className=" bg-white h-full rounded-lg flex flex-col gap-2 p-3">
       <header className=" flex flex-row items-center justify-between">
@@ -51,7 +57,9 @@ const SearchBox = ({ destTo, destFrom }) => {
             <input
               className="outline-none max-w-36 max-sm:max-w-28 text-center"
               type="date"
-              onChange={(e) => setDeparture(e.target.value)}
+              onChange={(e) =>
+                setDeparture(new Date(e.target.value).toLocaleDateString())
+              }
             />
           </div>
           <div className=" flex flex-row border gap-2 items-center rounded-e-full overflow-hidden pl-2 max-w-44">
@@ -59,13 +67,18 @@ const SearchBox = ({ destTo, destFrom }) => {
             <input
               className="outline-none max-w-36 max-sm:max-w-28 text-center"
               type="date"
-              onChange={(e) => setArrival(e.target.value)}
+              onChange={(e) =>
+                setArrival(new Date(e.target.value).toLocaleDateString())
+              }
             />
           </div>
         </div>
       </form>
-      <button className=" bg-[#4B0097] text-white text-sm p-2 rounded-lg w-fit">
-        Show Flights
+      <button
+        onClick={() => dispatch(resetFilter())}
+        className=" bg-[#4B0097] text-white text-sm p-2 rounded-lg w-fit"
+      >
+        Reset Filter
       </button>
     </div>
   );

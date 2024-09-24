@@ -9,6 +9,7 @@ const initialState = {
   destinations: [],
   aircraftTypes: [],
   myFlights: [],
+  filterParams: null,
 };
 
 export const getFlights = createAsyncThunk("flights/getFlights", async () => {
@@ -41,14 +42,11 @@ export const getAircraftTypes = createAsyncThunk(
   }
 );
 
-export const bookFlight = createAsyncThunk(
-  "flights/bookFlight",
-  async () => {
-    const res = await local.post("/myflights",{params});
+export const bookFlight = createAsyncThunk("flights/bookFlight", async () => {
+  const res = await local.post("/myflights", { params });
 
-    return console.log(res.data);
-  }
-);
+  return console.log(res.data);
+});
 
 const flightSlice = createSlice({
   name: "flight",
@@ -56,6 +54,12 @@ const flightSlice = createSlice({
   reducers: {
     addFlight: (state, action) => {
       state.myFlights.push = action.payload;
+    },
+    addFilter: (state, action) => {
+      state.filterParams = action.payload;
+    },
+    resetFilter: (state) => {
+      state.filterParams = null;
     },
   },
   extraReducers: (builder) => {
@@ -117,6 +121,6 @@ const flightSlice = createSlice({
   },
 });
 
-export const { addFlight } = flightSlice.actions;
+export const { addFlight, addFilter, resetFilter } = flightSlice.actions;
 
 export default flightSlice.reducer;
