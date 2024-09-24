@@ -16,7 +16,7 @@ Installation
 
     1.	Clone the repository
 
-        git clone https://github.com/your-username/myflights.git
+        git clone ......
 
     2.	Navigate to the project directory:
 
