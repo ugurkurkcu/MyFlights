@@ -8,3 +8,6 @@ export const stops = [
   { content: "1 Stop" },
   { content: "2+ Stops" },
 ];
+
+
+// mock data for sorting card

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Proxy is used to overcome CORS error
 const proxy = "https://thingproxy.freeboard.io/fetch/";
 
 export default axios.create({

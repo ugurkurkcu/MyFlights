@@ -1,0 +1,31 @@
+{
+  "myflights": [
+    {
+      "id": "4836",
+      "time": "01:00 AM - 03:05 AM",
+      "airlineNumber": "100",
+      "destination": "KLM to HER",
+      "price": 310,
+      "flightName": "KL2558",
+      "duration": "2h 5m"
+    },
+    {
+      "id": "3f7b",
+      "time": "01:00 AM - 03:05 AM",
+      "airlineNumber": "164",
+      "destination": "TRA to HER",
+      "price": 398,
+      "flightName": "HV6874",
+      "duration": "2h 5m"
+    },
+    {
+      "id": "823d",
+      "time": "01:00 AM - 02:44 AM",
+      "airlineNumber": "231",
+      "destination": "TFL to DLM",
+      "price": 334,
+      "flightName": "OR3057",
+      "duration": "1h 44m"
+    }
+  ]
+}
