@@ -48,7 +48,7 @@ const FlightCard = ({
         toast.success("Flight is booked succesfully!");
         dispatch(addFlight(details));
       })
-      .catch(() => {});
+      .catch((err) => {return err});
   };
 
   return (

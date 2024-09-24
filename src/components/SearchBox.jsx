@@ -3,7 +3,7 @@ import { IoIosAirplane, IoMdCalendar } from "react-icons/io";
 import { MdFlightLand, MdFlightTakeoff } from "react-icons/md";
 import Select from "./Select";
 import { useDispatch } from "react-redux";
-import { addFilter, resetFilter } from "../store/flightSlice";
+import { addFilter, resetFilter, setDepartureEndDate, setDepartureStartDate } from "../store/flightSlice";
 
 const SearchBox = ({ destTo, destFrom }) => {
   const [departure, setDeparture] = useState();
@@ -13,15 +13,15 @@ const SearchBox = ({ destTo, destFrom }) => {
   const dispatch = useDispatch();
 
   const handleArrival = (e) => {
-    setArrival(new Date(e.target.value).toLocaleDateString());
+    dispatch(setDepartureStartDate(new Date(e.target.value).toLocaleDateString()))
   };
   const handleDeparture = (e) => {
-    setDeparture(new Date(e.target.value).toLocaleDateString());
+    dispatch(setDepartureEndDate(new Date(e.target.value).toLocaleDateString()))
   };
 
   useEffect(() => {
-    dispatch(addFilter([departure, to]));
-  }, [departure, to]);
+    dispatch(addFilter([from, to]));
+  }, [from, to]);
 
   return (
     <div className=" bg-white h-full rounded-lg flex flex-col gap-2 p-3">
@@ -64,7 +64,7 @@ const SearchBox = ({ destTo, destFrom }) => {
             <input
               className="outline-none max-w-36 max-sm:max-w-28 text-center"
               type="date"
-              onChange={(e) => handleDeparture(e)}
+              onChange={handleArrival}
             />
           </div>
           <div className=" flex flex-row border gap-2 items-center rounded-e-full overflow-hidden pl-2 max-w-44">
@@ -72,13 +72,13 @@ const SearchBox = ({ destTo, destFrom }) => {
             <input
               className="outline-none max-w-36 max-sm:max-w-28 text-center"
               type="date"
-              onChange={(e) => handleArrival(e)}
+              onChange={handleDeparture}
             />
           </div>
         </div>
       </form>
       <button
-        onClick={() => dispatch(resetFilter())}
+        onClick={() => window.location.reload()}
         className=" bg-[#4B0097] text-white text-sm p-2 rounded-lg w-fit"
       >
         Reset Filter

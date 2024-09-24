@@ -12,7 +12,7 @@ const MainPage = () => {
   const [destFrom, setDestFrom] = useState();
   const [filteredFlights, setFilteredFlights] = useState();
   const [params, setParams] = useState();
-  const { flights, airlines, aircraftTypes, destinations } = useSelector(
+  const { flights, airlines, aircraftTypes, destinations,departureTimeStart,departureTimeEnd } = useSelector(
     (store) => store.flight
   );
 
@@ -35,16 +35,34 @@ const MainPage = () => {
 
   const filterFlights = async () => {
     try {
-      const arr = await flights.filter((flight) => {
-        const isDateMatch =
-          new Date(flight?.scheduleDateTime).toLocaleDateString() === params[0];
-        const isDestinationMatch = flight?.route?.destinations[0] == params[1];
+      const arr = flights.filter((flight) => {
+        // Convert departure time range to JavaScript Date objects
+        const startDate = new Date(departureTimeStart.split('.').reverse().join('-')); // Parse 'DD.MM.YYYY' to 'YYYY-MM-DD' for Date()
+        const endDate = new Date(departureTimeEnd.split('.').reverse().join('-'));
+        endDate.setHours(23, 59, 59, 999); // Include the full end day
+        
+        const flightDate = new Date(flight.scheduleDateTime);
+        flightDate.setHours(0, 0, 0, 0); // Normalize flight date to start of the day
+  
+        // Check if the flight's date is within the specified range
+        const isDateInRange = flightDate >= startDate && flightDate <= endDate;
+        
+        // Check if the destination matches params[1] (assuming params[1] contains the destination)
 
-        return isDateMatch || isDestinationMatch;
+        const isDestinationStartMatch = filterParams[0]!==undefined?flight?.route?.destinations[0] === filterParams[0]:true;
+        const isDestinationMatch = filterParams[1]!==undefined?flight?.route?.destinations[0] === filterParams[1]:true;
+  
+        // Return true if the flight matches the date range and destination
+        return isDateInRange && isDestinationMatch && isDestinationStartMatch;
       });
-      setFilteredFlights(await arr);
-    } catch (error) {}
+      setFilteredFlights(arr); // Set filtered flights
+    } catch (error) {
+      console.error('Error filtering flights:', error);
+    }
   };
+  
+  
+
 
   const handleParams = async () => {
     setParams(await filterParams);
@@ -53,14 +71,10 @@ const MainPage = () => {
   useEffect(() => {
     handleParams();
     filterFlights();
-
-    console.log(filteredFlights);
-  }, [filterParams]);
+  }, [filterParams,departureTimeStart,departureTimeEnd]);
 
   useEffect(() => {
     getDestinations();
-
-    console.log(destTo);
   }, [flights]);
 
   return (

@@ -10,6 +10,8 @@ const initialState = {
   aircraftTypes: [],
   myFlights: [],
   filterParams: null,
+  departureTimeStart:"2024-09-23",
+  departureTimeEnd:"2024-09-26"
 };
 
 export const getFlights = createAsyncThunk("flights/getFlights", async () => {
@@ -48,6 +50,8 @@ export const bookFlight = createAsyncThunk("flights/bookFlight", async () => {
   return console.log(res.data);
 });
 
+
+
 const flightSlice = createSlice({
   name: "flight",
   initialState,
@@ -60,6 +64,14 @@ const flightSlice = createSlice({
     },
     resetFilter: (state) => {
       state.filterParams = null;
+      state.departureTimeStart = null;
+      state.departureTimeEnd= null;
+    },
+    setDepartureStartDate: (state,action) =>{
+      state.departureTimeStart = action.payload
+    },
+    setDepartureEndDate: (state,action) =>{
+      state.departureTimeEnd = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -121,6 +133,6 @@ const flightSlice = createSlice({
   },
 });
 
-export const { addFlight, addFilter, resetFilter } = flightSlice.actions;
+export const { addFlight, addFilter, resetFilter,setDepartureStartDate,setDepartureEndDate } = flightSlice.actions;
 
 export default flightSlice.reducer;
