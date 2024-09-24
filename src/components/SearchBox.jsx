@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoIosAirplane, IoMdCalendar } from "react-icons/io";
 import { MdFlightLand, MdFlightTakeoff } from "react-icons/md";
+import Select from "./Select";
 
-const SearchBox = () => {
+const SearchBox = ({ destTo, destFrom }) => {
+  const [departure, setDeparture] = useState();
+  const [arrival, setArrival] = useState();
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
+
+  console.log(departure);
   return (
     <div className=" bg-white h-full rounded-lg flex flex-col gap-2 p-3">
       <header className=" flex flex-row items-center justify-between">
@@ -19,28 +26,44 @@ const SearchBox = () => {
           </button>
         </div>
       </header>
-      <main className=" flex gap-2 max-lg:flex-col" >
+      <form className=" flex gap-2 max-lg:flex-col">
         <div className=" flex flex-row gap-1">
           <div className=" flex flex-row border gap-2 items-center rounded-s-full overflow-hidden pl-2 max-w-44">
             <MdFlightTakeoff color="#4B0097" />
-            <input className="outline-none max-w-36 max-sm:max-w-28 " type="text" />
+            <Select
+              name={"From"}
+              options={destTo}
+              handleChange={(e) => setFrom(e.target.value)}
+            />
           </div>
           <div className=" flex flex-row border gap-2 items-center rounded-e-full overflow-hidden pl-2 max-w-44">
             <MdFlightLand color="#4B0097" />
-            <input className="outline-none max-w-36 max-sm:max-w-28" type="text" />
+            <Select
+              name={"To"}
+              options={destFrom}
+              handleChange={(e) => setTo(e.target.value)}
+            />
           </div>
         </div>
         <div className=" flex flex-row gap-1">
           <div className=" flex flex-row border gap-2 items-center rounded-s-full overflow-hidden pl-2 max-w-44">
             <IoMdCalendar color="#4B0097" />
-            <input className="outline-none max-w-36 max-sm:max-w-28 text-center" type="date" />
+            <input
+              className="outline-none max-w-36 max-sm:max-w-28 text-center"
+              type="date"
+              onChange={(e) => setDeparture(e.target.value)}
+            />
           </div>
           <div className=" flex flex-row border gap-2 items-center rounded-e-full overflow-hidden pl-2 max-w-44">
             <IoMdCalendar color="#4B0097" />
-            <input className="outline-none max-w-36 max-sm:max-w-28 text-center" type="date" />
+            <input
+              className="outline-none max-w-36 max-sm:max-w-28 text-center"
+              type="date"
+              onChange={(e) => setArrival(e.target.value)}
+            />
           </div>
         </div>
-      </main>
+      </form>
       <button className=" bg-[#4B0097] text-white text-sm p-2 rounded-lg w-fit">
         Show Flights
       </button>

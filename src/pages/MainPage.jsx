@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderRight from "../components/HeaderRight";
 import SearchBox from "../components/SearchBox";
 import Options from "../components/Options";
@@ -8,9 +8,32 @@ import { useSelector } from "react-redux";
 import Logo from "../components/Logo";
 
 const MainPage = () => {
+  const [destTo, setDestTo] = useState();
+  const [destFrom, setDestFrom] = useState();
   const { flights, airlines, aircraftTypes, destinations } = useSelector(
     (store) => store.flight
   );
+
+  const getDestinations = async () => {
+    const to = await flights.map((i) => {
+      const dest = i.route?.destinations[0];
+      return dest;
+    });
+
+    const from = await flights.map((i) => {
+      const dest = i.route?.destinations[0];
+      return dest;
+    });
+
+    setDestFrom(await from);
+    setDestTo(await to);
+  };
+
+  useEffect(() => {
+    getDestinations();
+
+    console.log(destTo);
+  }, [flights]);
 
   return (
     <div className=" bg-[#F6F4F8] p-4 h-full w-full flex flex-col shadow-xl rounded-lg max-lg:overflow-y-scroll ">
@@ -22,7 +45,7 @@ const MainPage = () => {
       <main className=" flex flex-row flex-1 gap-4 max-md:flex-col overflow-hidden max-md:overflow-scroll">
         <div className=" flex-1 flex flex-col gap-3  ">
           <div className=" w-[100%] ">
-            <SearchBox />
+            <SearchBox destTo={destTo} destFrom={destFrom} />
           </div>
           <div className=" grid grid-rows-3 grid-flow-col gap-3 max-lg:flex max-lg:flex-col-reverse overflow-scroll max-lg:flex-1 max-lg:justify-end">
             <div className="row-span-3 col-span-3 gap-3 flex flex-col  max-lg:h-44 max-lg:flex-1  overflow-scroll">
