@@ -35,6 +35,15 @@
       "price": 217,
       "flightName": "DL7488",
       "duration": "1h 31m"
+    },
+    {
+      "id": "3dcf",
+      "time": "01:00 AM - 03:05 AM",
+      "airlineNumber": "164",
+      "destination": "TRA to HER",
+      "price": 510,
+      "flightName": "HV6874",
+      "duration": "2h 5m"
     }
   ]
 }
