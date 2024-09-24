@@ -12,6 +12,13 @@ const SearchBox = ({ destTo, destFrom }) => {
   const [to, setTo] = useState();
   const dispatch = useDispatch();
 
+  const handleArrival = (e) => {
+    setArrival(new Date(e.target.value).toLocaleDateString());
+  };
+  const handleDeparture = (e) => {
+    setDeparture(new Date(e.target.value).toLocaleDateString());
+  };
+
   useEffect(() => {
     dispatch(addFilter([departure, to]));
   }, [departure, to]);
@@ -39,7 +46,7 @@ const SearchBox = ({ destTo, destFrom }) => {
             <Select
               name={"From"}
               options={destTo}
-              handleChange={(e) => setFrom(e.target.value)}
+              handleChange={async (e) => setFrom(await e.target.value)}
             />
           </div>
           <div className=" flex flex-row border gap-2 items-center rounded-e-full overflow-hidden pl-2 max-w-44">
@@ -47,7 +54,7 @@ const SearchBox = ({ destTo, destFrom }) => {
             <Select
               name={"To"}
               options={destFrom}
-              handleChange={(e) => setTo(e.target.value)}
+              handleChange={async (e) => setTo(await e.target.value)}
             />
           </div>
         </div>
@@ -57,9 +64,7 @@ const SearchBox = ({ destTo, destFrom }) => {
             <input
               className="outline-none max-w-36 max-sm:max-w-28 text-center"
               type="date"
-              onChange={(e) =>
-                setDeparture(new Date(e.target.value).toLocaleDateString())
-              }
+              onChange={(e) => handleDeparture(e)}
             />
           </div>
           <div className=" flex flex-row border gap-2 items-center rounded-e-full overflow-hidden pl-2 max-w-44">
@@ -67,9 +72,7 @@ const SearchBox = ({ destTo, destFrom }) => {
             <input
               className="outline-none max-w-36 max-sm:max-w-28 text-center"
               type="date"
-              onChange={(e) =>
-                setArrival(new Date(e.target.value).toLocaleDateString())
-              }
+              onChange={(e) => handleArrival(e)}
             />
           </div>
         </div>

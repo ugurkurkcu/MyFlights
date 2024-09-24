@@ -3,6 +3,8 @@ import { FaPlane, FaPlaneArrival, FaPlaneDeparture } from "react-icons/fa";
 import { addFlight, bookFlight } from "../store/flightSlice";
 import { useDispatch } from "react-redux";
 import { local } from "../utils/api";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const FlightCard = ({
   flight,
@@ -42,16 +44,16 @@ const FlightCard = ({
     };
     local
       .post("/myflights", details)
-
       .then(() => {
+        toast.success("Flight is booked succesfully!");
         dispatch(addFlight(details));
       })
-
       .catch(() => {});
   };
 
   return (
     <div className="bg-transparent rounded-md">
+<ToastContainer/>
       <div className="bg-white p-3 mb-2 relative rounded-tr-md rounded-tl-md rounded-br-md">
         <div className="mb-1">
           <h3 className="text-md font-semibold">
